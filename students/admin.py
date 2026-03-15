@@ -16,3 +16,4 @@ class TeacherAdmin(admin.ModelAdmin):
     
     # Allows you to search by name or their specialty subject
     search_fields = ('first_name', 'last_name', 'subject')
+    list_filter = ('subject',)
