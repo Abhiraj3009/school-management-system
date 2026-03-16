@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import Student, Teacher
+from .models import Student, Teacher, Classroom
+
+
+@admin.register(Classroom)
+class ClassroomAdmin(admin.ModelAdmin):
+    list_display = ('name', 'teacher')
+
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
