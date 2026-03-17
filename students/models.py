@@ -1,14 +1,24 @@
 from django.db import models
 
 class Teacher(models.Model):
+    # 1. Define the choices as a list of tuples (Value, Label)
+    SUBJECT_CHOICES = [
+        ('Maths', 'Maths'),
+        ('Science', 'Science'),
+        ('English', 'English'),
+        ('Hindi', 'Hindi'),
+        ('SST', 'Social Studies'),
+    ]
+
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
-    subject = models.CharField(max_length=100)
+    # 2. Add 'choices' to the field
+    subject = models.CharField(max_length=20, choices=SUBJECT_CHOICES)
     hire_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"Prof. {self.last_name} ({self.subject})"
+        return f"Prof. {self.last_name} ({self.get_subject_display()})"
 
 class Classroom(models.Model):
     name = models.CharField(max_length=50)  # e.g., "STD 1"
@@ -33,11 +43,11 @@ class Student(models.Model):
 class Period(models.Model):
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, related_name="periods")
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    subject = models.CharField(max_length=50) 
-    period_number = models.PositiveIntegerField() # 1, 2, 3, 4, or 5
+    # 3. Use the same choices here!
+    subject = models.CharField(max_length=20, choices=Teacher.SUBJECT_CHOICES)
+    period_number = models.PositiveIntegerField()
 
     class Meta:
-        # This makes sure you don't accidentally put two subjects in the same slot for one class
         unique_together = ('classroom', 'period_number')
 
     def __str__(self):
