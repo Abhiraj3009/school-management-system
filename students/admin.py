@@ -20,4 +20,5 @@ class ClassroomAdmin(admin.ModelAdmin):
 @admin.register(Period)
 class PeriodAdmin(admin.ModelAdmin):
     list_display = ('classroom', 'period_number', 'subject', 'teacher')
+    ordering = ('classroom__name', 'period_number')
     list_filter = ('classroom', 'subject')

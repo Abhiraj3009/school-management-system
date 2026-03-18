@@ -52,3 +52,12 @@ class Period(models.Model):
 
     def __str__(self):
         return f"{self.classroom.name} - P{self.period_number} ({self.subject})"
+    
+    def clean(self):
+        # Check if the teacher is already busy in another classroom during the same period
+        if Period.objects.filter(teacher=self.teacher, period_number=self.period_number).exclude(pk=self.pk).exists():
+            raise ValidationError(f"{self.teacher} is already assigned to another class in Period {self.period_number}!")
+
+    def save(self, *args, **kwargs):
+        self.full_clean() # This ensures the 'clean' method above is called
+        super().save(*args, **kwargs)
