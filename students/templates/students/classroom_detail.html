@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ classroom.name }} Timetable</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .back-link { display: inline-block; margin-bottom: 20px; text-decoration: none; color: #2196F3; }
+    </style>
+</head>
+<body>
+
+    <a href="{% url 'classroom_list' %}" class="back-link">← Back to All Classes</a>
+
+    <h1>Timetable for {{ classroom.name }}</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Period</th>
+                <th>Subject</th>
+                <th>Teacher</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for period in periods %}
+            <tr>
+                <td>Period {{ period.period_number }}</td>
+                <td>{{ period.get_subject_display }}</td>
+                <td>{{ period.teacher }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No periods scheduled for this class yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

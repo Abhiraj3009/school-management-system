@@ -1,0 +1,8 @@
+<h1>School Classrooms</h1>
+<ul>
+    {% for classroom in classrooms %}
+        <li>
+            <a href="{% url 'classroom_detail' classroom.pk %}">{{ classroom.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
