@@ -11,7 +11,11 @@ def classroom_detail(request, pk):
     classroom = get_object_or_404(Classroom, pk=pk)
     # Get all periods for THIS class, ordered by period number
     periods = classroom.periods.all().order_by('period_number')
+
+    students = classroom.students.all().order_by('last_name')
+
     return render(request, 'students/classroom_detail.html', {
         'classroom': classroom,
-        'periods': periods
+        'periods': periods,
+        'students': students
     })
