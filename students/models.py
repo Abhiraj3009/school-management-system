@@ -1,6 +1,12 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 class Teacher(models.Model):
+    
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    
     # 1. Define the choices as a list of tuples (Value, Label)
     SUBJECT_CHOICES = [
         ('Maths', 'Maths'),
@@ -27,6 +33,11 @@ class Classroom(models.Model):
         return self.name
 
 class Student(models.Model):
+    
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     roll_number = models.CharField(max_length=20, unique=True)
