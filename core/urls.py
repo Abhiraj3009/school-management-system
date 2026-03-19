@@ -17,8 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from students import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')), # This adds login/logout/etc.
     path('', include('students.urls')), # This connects your app's URLs
+    path('login_success/', views.login_success, name='login_success'),
 ]
